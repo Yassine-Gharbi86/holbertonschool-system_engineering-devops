@@ -1,0 +1,65 @@
+Simple Web Stack
+
+
+
+User ---> www.foobar.com ---> DNS (A record) ---> 8.8.8.8 (Server IP)
+                                                   |
+                                -----------------------------------------
+                                |          One Physical Server           |
+                                |---------------------------------------|
+                                |                                       |
+                                |  [ Nginx - Web Server ]              |
+                                |          ↓                            |
+                                |  [ Application Server ]              |
+                                |          ↓                            |
+                                |  [ App Files - Code ]                |
+                                |          ↓                            |
+                                |  [ MySQL - Database ]                |
+                                -----------------------------------------
+
+
+💡 Scenario
+A user wants to access www.foobar.com through their browser.
+
+The browser checks the domain name www.foobar.com, which is mapped to the IP address 8.8.8.8 using a DNS A record.
+
+This IP points to our one server where everything is hosted.
+
+✅ Infrastructure Components
+Domain Name: foobar.com
+
+DNS Record: www is a subdomain and the A record points it to 8.8.8.8.
+
+Server: A single machine at IP 8.8.8.8 that runs all services:
+
+Web Server (Nginx): Handles incoming HTTP requests and serves static content or forwards requests to the application server.
+
+Application Server: Runs the application code (e.g., Python, PHP) and generates dynamic content.
+
+Application Files: The actual codebase of the website.
+
+Database (MySQL): Stores all dynamic data like users, products, reviews, etc.
+
+Communication: The server communicates with the user's browser over the HTTP/HTTPS protocol.
+
+📚 Definitions
+Server: A powerful computer that provides services to other computers (clients) over a network.
+
+Domain Name: A human-readable address (like foobar.com) that maps to a server’s IP using DNS.
+
+DNS A Record: Maps a domain (like www.foobar.com) to an IP address.
+
+Web Server (Nginx): Manages HTTP requests, serves static files, and passes dynamic requests to the application.
+
+Application Server: Processes the logic of the website (e.g., rendering pages, processing forms).
+
+Database: Stores structured data used by the application (e.g., MySQL stores user info, posts, etc.).
+
+Communication Protocol: HTTP/HTTPS is used to transfer data between the server and the user’s browser.
+
+⚠️ Issues with This Setup
+SPOF (Single Point of Failure): If the one server fails, the whole website is down.
+
+Maintenance Downtime: Restarting the server (e.g., after updates) makes the site temporarily unavailable.
+
+No Scalability: The server cannot handle a large number of users at once. More traffic = slower performance or crashes.

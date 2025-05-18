@@ -1,0 +1,60 @@
+Secured and Monitored Web Infrastructure
+
+                  User
+                   |
+           www.foobar.com (HTTPS)
+                   |
+               [ Firewall 1 ]
+                   |
+            [ Load Balancer ]
+                   |
+               [ Firewall 2 ]
+          /                  \
+  [ Server 1 ]           [ Server 2 ]
+  -------------           -------------
+  | Firewall 3 |           | Firewall 3 |
+  | Nginx (HTTPS) |       | Nginx (HTTPS) |
+  | App Server   |         | App Server   |
+  | App Files   |          | App Files    |
+  | MySQL (Primary/Replica)|
+  -------------            -------------
+                   |
+          [ Monitoring Clients (3x) ]
+
+
+
+✅ Why We Add These Components
+Firewalls (3 total):
+Protect each layer (internet, load balancer, servers) by filtering unwanted traffic and blocking attacks.
+
+SSL Certificate:
+Enables HTTPS to encrypt traffic between user and server, protecting sensitive data.
+
+Monitoring Clients (3):
+Collect logs and performance metrics (like Sumologic) from each server to track health and detect issues.
+
+📘 Key Concepts
+Firewalls:
+Control and filter incoming/outgoing network traffic for security.
+
+HTTPS:
+Encrypts data so users’ info can’t be intercepted or modified.
+
+Monitoring:
+Tracks system health, traffic, errors, and performance metrics.
+
+Monitoring Data Collection:
+Agents on each server send logs and metrics to a centralized monitoring service.
+
+Monitoring Web Server QPS:
+Configure monitoring to count Queries Per Second (QPS) by analyzing web server logs or metrics.
+
+⚠️ Issues with This Setup
+SSL Termination at Load Balancer:
+Decrypting SSL there means traffic inside your network is unencrypted, risking internal sniffing.
+
+One MySQL Write Server:
+Single write node can become a bottleneck or SPOF if it fails.
+
+All Servers with Same Components:
+Running DB, app, and web server on all machines causes resource contention and complicates scaling and maintenance.

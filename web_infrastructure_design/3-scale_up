@@ -1,0 +1,28 @@
+ Application Server vs Web Server Infrastructure
+
+ Infrastructure Overview
+This setup uses 3 servers with separated components:
+
+Server 1: Web Server (Nginx)
+
+Server 2: Application Server
+
+Server 3: Database Server (MySQL)
+
+Additionally, there are 2 load balancers (HAProxy) configured in a cluster for high availability.
+
+Why Add Each Component?
+Separate Servers for Web, Application, and Database:
+Improves performance by isolating roles.
+Easier to maintain, scale, and secure each part independently.
+
+Load Balancers (HAProxy Cluster):
+Distributes traffic between web servers for load balancing and failover.
+Clustering of load balancers ensures no single point of failure.
+
+One Server (conceptual) in the stack:
+Represents each role clearly: web server handles HTTP requests, application server runs business logic, and database server manages data.
+
+Summary
+Separating web, application, and database servers along with clustered load balancers creates a more reliable, scalable, and maintainable web infrastructure.
+

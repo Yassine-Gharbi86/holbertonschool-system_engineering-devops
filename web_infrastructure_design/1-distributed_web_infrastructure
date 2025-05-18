@@ -1,0 +1,86 @@
+Three Server Web Infrastructure
+
+                     User
+                      |
+             www.foobar.com
+                      |
+                DNS A Record
+                      |
+              [ Load Balancer ]
+                (HAProxy - RR)
+                /             \
+               /               \
+      [ Server 1 ]         [ Server 2 ]
+      -------------        -------------
+      | Nginx     |        | Nginx     |
+      | AppServer |        | AppServer |
+      | App Files |        | App Files |
+      | MySQL     |        | MySQL     |
+      -------------        -------------
+         |                     |
+     [ Primary DB ] ----> [ Replica DB ]
+
+
+✅ Why We Add These Components
+Load Balancer (HAProxy):
+
+Distributes traffic between servers to improve performance and availability.
+
+Prevents one server from getting overloaded.
+
+Two App Servers (Server 1 & 2):
+
+Improves redundancy and allows scaling.
+
+If one fails, the other still handles traffic.
+
+Primary-Replica Database Setup:
+
+Ensures data redundancy and better performance.
+
+Writes go to Primary DB; Reads can go to Replica DB.
+
+🔁 Load Balancer Details
+Distribution Algorithm:
+
+Round Robin (RR):
+Sends requests to each server in order, one by one (Server 1, then Server 2, then back to Server 1, etc.).
+
+Active-Active Setup:
+
+Both servers handle traffic at the same time.
+
+Active-Passive means one server is on standby, used only if the other fails.
+
+🛢️ Database Cluster: Primary-Replica (Master-Slave)
+Primary Node (Master):
+
+Handles all write operations (e.g., creating new users).
+
+Replica Node (Slave):
+
+Syncs data from Primary.
+
+Can handle read-only queries (e.g., viewing posts).
+
+Replication:
+
+Done asynchronously or semi-synchronously from Primary to Replica.
+
+⚠️ Issues with This Setup
+SPOF (Single Point of Failure):
+
+The load balancer is a SPOF. If it goes down, nothing gets through.
+
+Security Issues:
+
+No firewall = exposed to network attacks.
+
+No HTTPS = insecure data transmission.
+
+No Monitoring:
+
+If a server fails, no alerts or automatic recovery.
+
+No performance tracking or logging.
+
